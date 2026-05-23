@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thelbert D — Web Designer & Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Syne', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: #070711; font-family: 'Inter', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    }
+    .card-glow { transition: all 0.3s ease; }
+    .card-glow:hover {
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
+      transform: translateY(-4px);
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+      transform: scale(1.04);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-18px); }
+    }
+    .float-anim { animation: float 6s ease-in-out infinite; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up-1 { animation: fadeUp 0.7s ease-out 0.05s both; }
+    .fade-up-2 { animation: fadeUp 0.7s ease-out 0.15s both; }
+    .fade-up-3 { animation: fadeUp 0.7s ease-out 0.25s both; }
+    .fade-up-4 { animation: fadeUp 0.7s ease-out 0.35s both; }
+
+    [data-scroll] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    [data-scroll].in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-scroll-delay="1"] { transition-delay: 0.1s; }
+    [data-scroll-delay="2"] { transition-delay: 0.2s; }
+    [data-scroll-delay="3"] { transition-delay: 0.3s; }
+    [data-scroll-delay="4"] { transition-delay: 0.4s; }
+    [data-scroll-delay="5"] { transition-delay: 0.5s; }
+
+    input, textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus { border-color: #7c3aed; }
+    input::placeholder, textarea::placeholder { color: #4b5563; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ── Scroll animation hook ── */
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('[data-scroll]');
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
+      { threshold: 0.12 }
+    );
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+/* ── Nav ── */
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  const links = ['About', 'Services', 'Experience', 'Contact'];
+  return (
+    <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#070711]/90 backdrop-blur-lg border-b border-white/10' : ''}`}>
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#" className="font-display text-xl font-bold text-white tracking-tight">
+          TD<span className="gradient-text">.</span>
+        </a>
+        <div className="hidden md:flex items-center gap-8">
+          {links.map(l => (
+            <a key={l} href={`#${l.toLowerCase()}`}
+              className="text-sm text-gray-400 font-medium hover:text-white transition-colors">
+              {l}
+            </a>
+          ))}
+          <a href="book-a-call.html"
+            className="gradient-bg text-white text-sm font-bold px-5 py-2.5 rounded-full btn-glow transition-all">
+            Book a call now
+          </a>
+        </div>
+        <button className="md:hidden text-white p-1" onClick={() => setOpen(!open)}>
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            {open
+              ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              : <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>}
+          </svg>
+        </button>
+      </div>
+      {open && (
+        <div className="md:hidden bg-[#0d0d1a] border-t border-white/10 px-6 py-5 flex flex-col gap-4">
+          {links.map(l => (
+            <a key={l} href={`#${l.toLowerCase()}`}
+              className="text-gray-300 text-sm font-medium"
+              onClick={() => setOpen(false)}>{l}</a>
+          ))}
+          <a href="book-a-call.html"
+            className="gradient-bg text-white text-sm font-bold px-5 py-3 rounded-full text-center"
+            onClick={() => setOpen(false)}>
+            Book a call now
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+/* ── Hero ── */
+function Hero() {
+  return (
+    <section id="about" className="min-h-screen flex items-center pt-24 pb-20 px-6 relative overflow-hidden">
+      {/* Glow blobs */}
+      <div className="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full bg-purple-700/20 blur-3xl pointer-events-none"/>
+      <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] rounded-full bg-pink-600/15 blur-3xl pointer-events-none"/>
+
+      <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-14 items-center">
+        {/* Left */}
+        <div>
+          <div className="fade-up-1 inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-gray-400 font-medium mb-8">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse inline-block"/>
+            Available for new projects
+          </div>
+          <h1 className="fade-up-2 font-display text-3xl md:text-[44px] font-bold text-white leading-[1.1] tracking-tight mb-6">
+            Hello I am<br/>
+            <span className="gradient-text whitespace-nowrap">Thelbert Desoloc</span>
+          </h1>
+          <p className="fade-up-3 text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
+            A results-driven freelancer specializing in GoHighLevel, N8n automation, Claude AI, Facebook management, and graphic design. I help businesses streamline operations, automate workflows, manage CRM systems, and grow their online presence through smart marketing and creative content. With a focus on efficiency, branding, and lead generation, I deliver practical solutions that drive measurable results.
+          </p>
+          <div className="fade-up-4 flex flex-wrap gap-4">
+            <a href="book-a-call.html"
+              className="gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2">
+              Book a call now
+              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+            <a href="#work"
+              className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full text-base hover:border-white/40 hover:bg-white/5 transition-all">
+              View My Work
+            </a>
+          </div>
+          <div className="fade-up-4 flex gap-10 mt-12">
+            {[['15+', 'Projects Delivered'], ['5★', 'Average Rating'], ['4yr', 'Experience']].map(([n, l]) => (
+              <div key={l}>
+                <div className="font-display text-2xl font-bold gradient-text">{n}</div>
+                <div className="text-gray-500 text-sm mt-0.5">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right — floating card */}
+        <div className="flex justify-center items-center">
+          <div className="float-anim relative">
+            <div className="w-80 h-80 md:w-[480px] md:h-[480px] rounded-3xl gradient-bg p-[3px]">
+              <div className="w-full h-full rounded-3xl bg-[#0d0d1a] overflow-hidden flex items-center justify-center">
+                <img
+                  src="images/thelbert-about.png"
+                  alt="Thelbert D"
+                  className="w-full h-full object-cover"
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="w-full h-full hidden flex-col items-center justify-center gap-3 p-8">
+                  <div className="text-7xl">👨‍💻</div>
+                  <span className="text-gray-400 text-sm font-medium">Thelbert D.</span>
+                  <span className="text-gray-600 text-xs">Web Designer & Developer</span>
+                </div>
+              </div>
+            </div>
+            {/* Badge — latest project */}
+            <div className="absolute -bottom-5 -left-8 bg-[#0d0d1a] border border-white/10 rounded-2xl px-4 py-3 shadow-2xl">
+              <div className="text-[10px] text-gray-500 mb-0.5 uppercase tracking-wider">Latest project</div>
+              <div className="text-white font-bold text-sm">N8n and Claude AI ✅</div>
+            </div>
+            {/* Badge — shipping */}
+            <div className="absolute -top-5 -right-8 bg-[#0d0d1a] border border-white/10 rounded-2xl px-4 py-3 shadow-2xl text-center">
+              <div className="text-2xl">🚀</div>
+              <div className="text-[10px] text-gray-500 mt-1">GoHighLevel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Features ── */
+function Features() {
+  const cards = [
+    { icon: '🎨', title: 'Stunning Visual Design',     desc: 'Every pixel crafted to reflect your brand and captivate your audience from the very first scroll.' },
+    { icon: '📘', title: 'Facebook Management',        desc: 'Strategic Facebook page management, ad campaigns, and content creation that grow your audience and generate quality leads.' },
+    { icon: '🛠️', title: 'Ongoing Support',            desc: "I don't disappear after launch. Available for updates, tweaks, and scaling as you grow." },
+    { icon: '⚙️', title: 'GoHighLevel Setup',          desc: 'Full CRM and funnel builds inside GoHighLevel: pipelines, automations, and campaigns all connected.' },
+    { icon: '🔄', title: 'n8n Automation',             desc: 'Custom workflow automations with n8n that save you hours every week by connecting your tools seamlessly.' },
+    { icon: '🤖', title: 'Claude AI Integration',      desc: 'Embed AI-powered features into your business: smart chatbots, content generation, and intelligent workflows.' },
+  ];
+  return (
+    <section id="services" className="py-28 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16" data-scroll>
+          <p className="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">What you get</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+            Everything you need to<br/>
+            <span className="gradient-text">stand out online</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-lg mx-auto">
+            Not just a website. A full digital presence that works while you sleep.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {cards.map((c, i) => (
+            <div key={i}
+              className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default"
+              data-scroll data-scroll-delay={String((i % 3) + 1)}>
+              <div className="text-3xl mb-5">{c.icon}</div>
+              <h3 className="text-white font-bold text-lg mb-2">{c.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Experience ── */
+function Experience() {
+  const jobs = [
+    {
+      icon: '⚙️',
+      logo: 'images/images (1).png',
+      company: 'Trioforce Digital Marketing',
+      role: 'GHL Specialist',
+      points: [
+        'Creating funnels / Website',
+        'Automation / Integration',
+      ],
+    },
+    {
+      icon: '🧠',
+      logo: 'images/brain-hub-logo.png',
+      company: 'Brain Hub',
+      role: 'Digital Marketing / GHL Specialist',
+      points: [
+        'Creating Digital Product',
+        'Creating funnels / Website',
+        'Automation / Integration',
+        'AI image / AI Videos',
+      ],
+    },
+    {
+      icon: '📊',
+      company: 'Garage Door Repair',
+      role: 'Bookkeeping and Executive Assistant',
+      points: [
+        'Managed accounts payable and receivable.',
+        'Reconciled bank and credit card statements.',
+        'Prepared financial reports.',
+        'Assisted in budget preparation.',
+        'Conducted audits for compliance.',
+      ],
+    },
+    {
+      icon: '🏡',
+      logo: 'images/paramount_home_group_logo (1).jpg',
+      company: 'Paramount Home Group',
+      role: 'Personal Assistant',
+      points: [
+        'Managed MLS listings, ensuring accurate and timely updates.',
+        'Coordinated showings, inspections, and closings with clients, lenders, and vendors.',
+        'Maintained CRM database and tracked leads to support agent pipeline management.',
+      ],
+    },
+    {
+      icon: '💪',
+      logo: 'images/fbc-logo.jpg',
+      company: 'Fitness Business Consulting',
+      role: 'GoHighLevel Tech-Support',
+      points: [
+        'Automation Support',
+        'Meta Ads',
+        'Client Onboarding',
+      ],
+    },
+    {
+      icon: '🤖',
+      company: 'Baccarat Automates',
+      role: 'GoHighLevel / AI Specialist',
+      points: [
+        'Build Website',
+        'GHL Automation',
+        'Claude coding',
+      ],
+    },
+  ];
+  return (
+    <section id="experience" className="py-28 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16" data-scroll>
+          <p className="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">Where I've worked</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+            Work <span className="gradient-text">Experience</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {jobs.map((j, i) => (
+            <div key={i}
+              className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default"
+              data-scroll data-scroll-delay={String((i % 3) + 1)}>
+              <div className="mb-5 h-12 flex items-center">
+                {j.logo ? (
+                  <>
+                    <img src={j.logo} alt={j.company}
+                      className={`w-12 h-12 object-cover rounded-full ${j.logoClass || ''}`}
+                      onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline'; }}/>
+                    <span className="text-3xl hidden">{j.icon}</span>
+                  </>
+                ) : (
+                  <span className="text-3xl">{j.icon}</span>
+                )}
+              </div>
+              <h3 className="text-white font-bold text-lg mb-1">{j.company}</h3>
+              <p className="gradient-text font-semibold text-sm mb-4">{j.role}</p>
+              <ul className="flex flex-col gap-2">
+                {j.points.map((p, k) => (
+                  <li key={k} className="flex gap-2.5 text-gray-400 text-sm leading-relaxed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0 mt-[7px]"/>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Testimonials ── */
+function Testimonials() {
+  const items = [
+    {
+      quote: "Thelbert completely transformed our online presence. The registration page he built converted so well, we filled our entire cohort in under 48 hours.",
+      name: "Sarah Mitchell", title: "",
+      initials: "SM", grad: "from-purple-500 to-pink-500",
+    },
+    {
+      quote: "Working with Thelbert was seamless. He understood our brand immediately and delivered a site that looks premium, loads fast, and actually gets us leads.",
+      name: "James Carter", title: "",
+      initials: "JC", grad: "from-blue-500 to-purple-500",
+    },
+    {
+      quote: "I've worked with a lot of designers, and Thelbert is in a different league. The attention to detail, the speed, and the final product. All exceptional.",
+      name: "Melissa Torres", title: "",
+      initials: "MT", grad: "from-pink-500 to-orange-500",
+    },
+    {
+      quote: "Our funnels and landing pages started converting almost immediately. You can tell everything was built with strategy.",
+      name: "Kevin Santos", title: "",
+      initials: "KS", grad: "from-orange-500 to-pink-500",
+    },
+    {
+      quote: "We were already using GoHighLevel but everything was messy. After the optimization, our pipeline became clear and we stopped losing leads. Huge difference.",
+      name: "Daniel Reyes", title: "",
+      initials: "DR", grad: "from-purple-500 to-blue-500",
+    },
+    {
+      quote: "The designs made our brand look 10x more professional. Our ads finally started getting attention and engagement.",
+      name: "Adrian Lopez", title: "",
+      initials: "AL", grad: "from-blue-500 to-pink-500",
+    },
+  ];
+  return (
+    <section id="work" className="py-28 px-6 bg-white/[0.02]">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16" data-scroll>
+          <p className="text-pink-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">What clients say</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+            Real results,<br/><span className="gradient-text">real people</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {items.map((t, i) => (
+            <div key={i}
+              className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5 card-glow"
+              data-scroll data-scroll-delay={String((i % 3) + 1)}>
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, j) => <span key={j} className="text-yellow-400 text-sm">★</span>)}
+              </div>
+              <p className="text-gray-300 text-sm leading-relaxed flex-1">"{t.quote}"</p>
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.grad} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
+                  {t.initials}
+                </div>
+                <div>
+                  <div className="text-white font-semibold text-sm">{t.name}</div>
+                  <div className="text-gray-500 text-xs">{t.title}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Contact Form ── */
+function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = useState(false);
+  const handle = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const submit = e => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`New project inquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+    );
+    window.location.href =
+      `mailto:desolocthelbert3@gmail.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  return (
+    <section id="contact" className="py-28 px-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-12" data-scroll>
+          <p className="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">Let's talk</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+            Ready to build<br/><span className="gradient-text">something great?</span>
+          </h2>
+          <p className="text-gray-400">Fill in your details and I'll get back to you within 24 hours.</p>
+        </div>
+
+        {sent ? (
+          <div className="bg-white/[0.04] border border-green-500/30 rounded-2xl p-16 text-center" data-scroll>
+            <div className="text-5xl mb-5">📧</div>
+            <h3 className="text-white font-bold text-xl mb-2">Almost there!</h3>
+            <p className="text-gray-400">Your email app just opened — press <span className="text-white font-semibold">Send</span> there to deliver your message. I'll reply within 24 hours.</p>
+          </div>
+        ) : (
+          <form onSubmit={submit} className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-5" data-scroll>
+            {[
+              { name: 'name',    label: 'Your Name',      type: 'text',  placeholder: 'Jane Smith' },
+              { name: 'email',   label: 'Email Address',  type: 'email', placeholder: 'jane@example.com' },
+            ].map(f => (
+              <div key={f.name}>
+                <label className="text-gray-400 text-sm font-medium block mb-2">{f.label}</label>
+                <input
+                  name={f.name} type={f.type} value={form[f.name]}
+                  onChange={handle} required placeholder={f.placeholder}
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white"
+                  style={{ background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)' }}
+                />
+              </div>
+            ))}
+            <div>
+              <label className="text-gray-400 text-sm font-medium block mb-2">Your Message</label>
+              <textarea
+                name="message" value={form.message} onChange={handle} required
+                rows={5} placeholder="Tell me about your project..."
+                className="w-full rounded-xl px-4 py-3 text-sm text-white resize-none"
+                style={{ background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)' }}
+              />
+            </div>
+            <button type="submit"
+              className="gradient-bg text-white font-bold py-4 rounded-xl text-base btn-glow transition-all mt-1">
+              Send Message →
+            </button>
+          </form>
+        )}
+
+      </div>
+    </section>
+  );
+}
+
+/* ── Footer ── */
+function Footer() {
+  return (
+    <footer className="border-t border-white/[0.07] py-12 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-start">
+
+        {/* Phone */}
+        <div>
+          <h4 className="text-white font-bold text-sm mb-3">Phone</h4>
+          <a href="tel:+639485875842"
+            className="text-gray-400 text-sm font-semibold hover:text-white transition-colors">
+            +63 948 587 5842
+          </a>
+        </div>
+
+        {/* Email */}
+        <div>
+          <h4 className="text-white font-bold text-sm mb-3">Email</h4>
+          <a href="mailto:desolocthelbert3@gmail.com"
+            className="text-gray-400 text-sm font-semibold hover:text-white transition-colors break-all">
+            desolocthelbert3@gmail.com
+          </a>
+        </div>
+
+        {/* Follow Me */}
+        <div>
+          <h4 className="text-white font-bold text-sm mb-3">Follow Me</h4>
+          <div className="flex gap-3 items-center">
+            <a href="#" aria-label="Instagram" className="hover:opacity-80 transition-opacity">
+              <svg width="26" height="26" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#feda75"/>
+                    <stop offset="35%" stopColor="#fa7e1e"/>
+                    <stop offset="60%" stopColor="#d62976"/>
+                    <stop offset="80%" stopColor="#962fbf"/>
+                    <stop offset="100%" stopColor="#4f5bd5"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#igGrad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook"
+              className="w-[26px] h-[26px] rounded-md bg-[#1877F2] flex items-center justify-center hover:opacity-80 transition-opacity">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="md:text-right">
+          <p className="text-gray-400 text-sm font-semibold leading-relaxed">Copyright © 2022 Thelbert Desoloc.</p>
+          <p className="text-gray-400 text-sm font-semibold leading-relaxed">: )Powered by Thelbert</p>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
+
+/* ── App ── */
+function App() {
+  useScrollReveal();
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Experience />
+        <Features />
+        <Testimonials />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
