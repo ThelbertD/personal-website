@@ -149,6 +149,7 @@ const { useState, useEffect, useRef } = React;
 const h = React.createElement;
 
 const PORTFOLIO_URL = 'https://drive.google.com/drive/folders/1h8Z6_MNBSo390TjfG3YuLtu3iBedoGRt?usp=sharing';
+const CALENDLY_URL = 'https://calendly.com/desolocthelbert3/30min';
 
 /* ── Scroll animation hook ── */
 function useScrollReveal() {
@@ -333,7 +334,7 @@ function Nav() {
       ),
       h('div', { className: 'hidden md:flex items-center gap-8' },
         links.map(l => linkEl(l)),
-        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-2.5 rounded-full btn-glow transition-all' }, "Let's Connect")
+        h('a', { href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-2.5 rounded-full btn-glow transition-all' }, "Let's Connect")
       ),
       h('button', { className: 'md:hidden text-white p-1', onClick: () => setOpen(!open) },
         h('svg', { width: 24, height: 24, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
@@ -345,7 +346,7 @@ function Nav() {
     ),
     open && h('div', { className: 'md:hidden bg-[#0B0B0F] border-t border-white/10 px-6 py-5 flex flex-col gap-4' },
       links.map(l => linkEl(l, 'text-gray-300 text-sm font-medium')),
-      h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-3 rounded-full text-center', onClick: () => setOpen(false) }, "Let's Connect")
+      h('a', { href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-3 rounded-full text-center', onClick: () => setOpen(false) }, "Let's Connect")
     )
   );
 }
@@ -376,7 +377,7 @@ function Hero() {
         h('span', { className: 'w-2 h-2 bg-green-400 rounded-full animate-pulse inline-block' }),
         'Available to start immediately. Can deploy your first working system quickly.'),
       h('div', { className: 'fade-up-4 flex flex-wrap gap-4' },
-        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
+        h('a', { href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
           h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
             h('rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }),
             h('line', { x1: 16, y1: 2, x2: 16, y2: 6 }),
@@ -687,7 +688,7 @@ function CTA() {
       h('div', { className: 'text-center mb-12', 'data-scroll': true },
         h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-3' }, "Let's talk"),
         h('h2', { className: 'font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4' },
-          'Ready to ', h('span', { className: 'gradient-text' }, 'Optimize?')),
+          "Let's Build a ", h('span', { className: 'gradient-text' }, 'Better System.')),
         h('p', { className: 'text-gray-400 max-w-lg mx-auto' },
           "If your operations feel messy, manual, or hard to scale — I'll fix the system behind it. Fill in your details and I'll get back to you within 24 hours.")),
       sent
@@ -716,7 +717,7 @@ function CTA() {
               })),
             h('div', { className: 'flex flex-wrap gap-3 mt-1' },
               h('button', { type: 'submit', className: 'flex-1 gradient-bg text-white font-bold py-4 rounded-xl text-base btn-glow transition-all' }, 'Send Message →'),
-              h('a', { href: 'book-a-call.html', className: 'flex-1 text-center border border-white/20 text-white font-semibold py-4 rounded-xl text-base hover:border-white/40 hover:bg-white/5 transition-all' }, 'Book a Call'))
+              h('a', { href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer', className: 'flex-1 text-center border border-white/20 text-white font-semibold py-4 rounded-xl text-base hover:border-white/40 hover:bg-white/5 transition-all' }, 'Book a Call'))
           )
     )
   );
@@ -728,20 +729,20 @@ function CTABanner() {
     h('div', { className: 'max-w-3xl mx-auto text-center', 'data-scroll': true },
       h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-4' }, "Let's talk"),
       h('h2', { className: 'font-display text-4xl md:text-6xl font-bold text-white leading-tight mb-6' },
-        'Ready to ', h('span', { className: 'gradient-text' }, 'Optimize?')),
+        "Let's Build a ", h('span', { className: 'gradient-text' }, 'Better System.')),
       h('p', { className: 'text-gray-400 text-lg leading-relaxed mb-3 max-w-xl mx-auto' },
-        "If your operations feel messy, manual, or hard to scale — I'll fix the system behind it."),
-      h('p', { className: 'text-white font-semibold text-base md:text-lg mb-10' },
-        "Let's build a system that works without you constantly managing it."),
+        "When inefficient processes and manual tasks are slowing your business down, I'll create the systems that streamline operations and support seamless growth."),
+      h('p', { className: 'text-white font-semibold text-xs sm:text-sm md:text-base mb-10 md:whitespace-nowrap' },
+        "Let's build a system that runs efficiently, so your business doesn't depend on your constant attention."),
       h('div', { className: 'flex flex-wrap gap-4 justify-center' },
-        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
+        h('a', { href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
           h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
             h('rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }),
             h('line', { x1: 16, y1: 2, x2: 16, y2: 6 }),
             h('line', { x1: 8, y1: 2, x2: 8, y2: 6 }),
             h('line', { x1: 3, y1: 10, x2: 21, y2: 10 })),
           'Book a Call'),
-        h('a', { href: 'mailto:desolocthelbert3@gmail.com', className: 'spin-border bg-white/[0.06] text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/10 transition-all inline-flex items-center gap-2.5' },
+        h('a', { href: 'mailto:desolocthelbert3@gmail.com?subject=Project%20Inquiry%20from%20your%20website', className: 'spin-border bg-white/[0.06] text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/10 transition-all inline-flex items-center gap-2.5' },
           h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
             h('rect', { x: 2, y: 4, width: 20, height: 16, rx: 2 }),
             h('path', { d: 'm22 7-10 5L2 7' })),
@@ -760,8 +761,16 @@ function CTABanner() {
 function Footer() {
   return h('footer', { className: 'border-t border-white/[0.07] py-10 px-6' },
     h('div', { className: 'max-w-6xl mx-auto text-center' },
-      h('p', { className: 'text-gray-400 text-sm font-semibold leading-relaxed' }, '© 2026 Thelbert Desoloc.'),
-      h('p', { className: 'text-gray-500 text-sm font-semibold leading-relaxed' }, 'All systems operational.'))
+      h('div', { className: 'flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-6' },
+        h('a', { href: 'mailto:desolocthelbert3@gmail.com', className: 'inline-flex items-center gap-2 text-gray-300 text-sm font-semibold hover:text-white transition-colors' },
+          h('span', null, '📧'), 'desolocthelbert3@gmail.com'),
+        h('a', { href: 'tel:+639610832490', className: 'inline-flex items-center gap-2 text-gray-300 text-sm font-semibold hover:text-white transition-colors' },
+          h('span', null, '📱'), '+63 961 083 2490'),
+        h('span', { className: 'inline-flex items-center gap-2 text-gray-300 text-sm font-semibold' },
+          h('span', null, '📍'), 'Philippines')),
+      h('p', { className: 'text-gray-400 text-sm font-semibold leading-relaxed' },
+        '© 2026 Thelbert Desoloc. ',
+        h('span', { className: 'text-gray-500' }, 'All systems operational.')))
   );
 }
 
@@ -801,7 +810,7 @@ function ChatWidget() {
           h('div', { className: 'bg-white/[0.06] border border-white/10 rounded-2xl rounded-bl-sm px-4 py-3 text-gray-200 text-sm leading-relaxed' },
             'Hi! 👋 Want to automate and scale your business? The fastest way to start is a quick call — let me grab you a slot.')),
         h('a', {
-          href: 'book-a-call.html',
+          href: CALENDLY_URL, target: '_blank', rel: 'noopener noreferrer',
           className: 'spin-border gradient-bg text-white font-bold py-3.5 rounded-full text-sm btn-glow transition-all inline-flex items-center justify-center gap-2'
         },
           h('svg', { width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
