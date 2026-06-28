@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thelbert D — Web Designer & Developer</title>
+  <title>Thelbert Desoloc — Systems, Automation & GoHighLevel Specialist</title>
+  <meta name="description" content="I build backend systems, automation, CRM workflows, and high-converting funnels that let your business scale without chaos.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="images/td-logo.png">
+  <link rel="apple-touch-icon" href="images/td-logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Syne', 'sans-serif'],
+            sans: ['Poppins', 'sans-serif'],
+            display: ['Poppins', 'sans-serif'],
           }
         }
       }
@@ -22,25 +26,53 @@
   </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    body { background: #070711; font-family: 'Inter', sans-serif; }
+    body {
+      background-color: #000000;
+      background-image:
+        radial-gradient(ellipse 90% 70% at 5% -5%, rgba(37,99,235,0.38), transparent 62%),
+        radial-gradient(ellipse 85% 70% at 105% 18%, rgba(59,130,246,0.30), transparent 62%),
+        radial-gradient(ellipse 100% 75% at 50% 110%, rgba(37,99,235,0.26), transparent 62%);
+      background-attachment: fixed;
+      font-family: 'Poppins', sans-serif;
+    }
 
     .gradient-text {
-      background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f97316 100%);
+      background: linear-gradient(135deg, #93C5FD 0%, #3B82F6 50%, #2563EB 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
     .gradient-bg {
-      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
     }
     .card-glow { transition: all 0.3s ease; }
     .card-glow:hover {
-      box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.22);
       transform: translateY(-4px);
     }
     .btn-glow:hover {
-      box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
       transform: scale(1.04);
+    }
+
+    /* rotating gradient border on buttons */
+    @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    @keyframes spinBorder { to { --spin: 360deg; } }
+    .spin-border { position: relative; z-index: 0; }
+    .spin-border::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(from var(--spin), #60A5FA, #93C5FD, #2563EB, #3B82F6, #22D3EE, #60A5FA);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask-composite: exclude;
+      animation: spinBorder 3s linear infinite;
+      pointer-events: none;
+      z-index: -1;
     }
 
     @keyframes float {
@@ -80,20 +112,43 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    input:focus, textarea:focus { border-color: #7c3aed; }
+    input:focus, textarea:focus { border-color: #3B82F6; }
     input::placeholder, textarea::placeholder { color: #4b5563; }
+
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 90px; }
+
+    /* typewriter cursor */
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .type-cursor { display: inline-block; width: 3px; margin-left: 2px; background: #3B82F6; animation: blink 1s step-end infinite; }
+
+    /* chat widget */
+    @keyframes chatPop {
+      from { opacity: 0; transform: translateY(16px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .chat-pop { animation: chatPop 0.25s ease-out both; }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .msg-in { animation: msgIn 0.35s ease-out both; }
+    .chat-pulse { box-shadow: 0 0 0 0 rgba(59,130,246,0.55); animation: chatPulse 2.4s infinite; }
+    @keyframes chatPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.5); }
+      70%  { box-shadow: 0 0 0 16px rgba(59,130,246,0); }
+      100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+    }
   </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script>
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-const {
-  useState,
-  useEffect,
-  useRef
-} = React;
+const { useState, useEffect, useRef } = React;
+const h = React.createElement;
+
+const PORTFOLIO_URL = 'https://drive.google.com/drive/folders/1h8Z6_MNBSo390TjfG3YuLtu3iBedoGRt?usp=sharing';
 
 /* ── Scroll animation hook ── */
 function useScrollReveal() {
@@ -101,12 +156,148 @@ function useScrollReveal() {
     const els = document.querySelectorAll('[data-scroll]');
     const obs = new IntersectionObserver(entries => entries.forEach(e => {
       if (e.isIntersecting) e.target.classList.add('in-view');
-    }), {
-      threshold: 0.12
-    });
+    }), { threshold: 0.12 });
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+}
+
+/* ── Typewriter hook ── */
+function useTypewriter(words, speed = 85, pause = 1500) {
+  const [text, setText] = useState('');
+  const [i, setI] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+  useEffect(() => {
+    const current = words[i % words.length];
+    let t;
+    if (!deleting && text === current) {
+      t = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && text === '') {
+      setDeleting(false);
+      setI(v => v + 1);
+    } else {
+      t = setTimeout(() => {
+        setText(deleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1));
+      }, deleting ? speed / 2 : speed);
+    }
+    return () => clearTimeout(t);
+  }, [text, deleting, i]);
+  return text;
+}
+
+/* ── Constellation particle background (full-site, cursor-aware) ── */
+function BackgroundParticles() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const LINKD = 150;   // particle-to-particle link distance
+    const MOUSED = 220;  // cursor influence radius
+    let w = 0, h = 0, raf = 0;
+    const pts = [];
+    const mouse = { x: null, y: null };
+    function resize() {
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * DPR; canvas.height = h * DPR;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    function seed() {
+      pts.length = 0;
+      const n = Math.max(45, Math.min(130, Math.floor(w * h / 15000)));
+      for (let i = 0; i < n; i++) {
+        pts.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+        });
+      }
+    }
+    function tick() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of pts) {
+        if (mouse.x != null) {
+          const dx = mouse.x - p.x, dy = mouse.y - p.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MOUSED && d > 0.5) {
+            const f = (1 - d / MOUSED) * 0.04;   // gentle pull toward cursor
+            p.vx += (dx / d) * f; p.vy += (dy / d) * f;
+          }
+        }
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.985; p.vy *= 0.985;            // friction so they settle
+        // keep a little baseline drift
+        if (Math.abs(p.vx) < 0.06) p.vx += (Math.random() - 0.5) * 0.04;
+        if (Math.abs(p.vy) < 0.06) p.vy += (Math.random() - 0.5) * 0.04;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        p.x = Math.max(0, Math.min(w, p.x));
+        p.y = Math.max(0, Math.min(h, p.y));
+      }
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const a = pts[i], b = pts[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < LINKD) {
+            ctx.strokeStyle = 'rgba(96,165,250,' + (0.14 * (1 - d / LINKD)) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      if (mouse.x != null) {
+        for (const p of pts) {
+          const dx = p.x - mouse.x, dy = p.y - mouse.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MOUSED) {
+            ctx.strokeStyle = 'rgba(96,165,250,' + (0.32 * (1 - d / MOUSED)) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
+        }
+      }
+      for (const p of pts) {
+        ctx.fillStyle = 'rgba(147,197,253,0.7)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      raf = requestAnimationFrame(tick);
+    }
+    resize(); seed(); tick();
+    const onResize = () => { resize(); seed(); };
+    const onMove = e => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    const onLeave = () => { mouse.x = null; mouse.y = null; };
+    const onTouch = e => { if (e.touches[0]) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } };
+    window.addEventListener('resize', onResize);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseout', onLeave);
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    window.addEventListener('touchend', onLeave);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseout', onLeave);
+      window.removeEventListener('touchmove', onTouch);
+      window.removeEventListener('touchend', onLeave);
+    };
+  }, []);
+  return h('canvas', { ref, className: 'fixed inset-0 w-full h-full pointer-events-none', style: { zIndex: -1 }, 'aria-hidden': 'true' });
+}
+
+/* ── Small helpers ── */
+function SectionHeading({ eyebrow, title, accent, sub }) {
+  return h('div', { className: 'text-center mb-16', 'data-scroll': true },
+    h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-3' }, eyebrow),
+    h('h2', { className: 'font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4' },
+      title, accent ? h('span', { className: 'gradient-text' }, accent) : null),
+    sub ? h('p', { className: 'text-gray-400 text-lg max-w-xl mx-auto' }, sub) : null
+  );
 }
 
 /* ── Nav ── */
@@ -118,398 +309,372 @@ function Nav() {
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
-  const links = ['About', 'Services', 'Projects', 'Experience', 'Contact'];
-  return /*#__PURE__*/React.createElement("nav", {
-    className: `fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#070711]/90 backdrop-blur-lg border-b border-white/10' : ''}`
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    className: "font-display text-xl font-bold text-white tracking-tight"
-  }, "TD", /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text"
-  }, ".")), /*#__PURE__*/React.createElement("div", {
-    className: "hidden md:flex items-center gap-8"
-  }, links.map(l => {
-    const isProject = l === 'Projects';
-    const href = isProject ? 'https://drive.google.com/drive/folders/1h8Z6_MNBSo390TjfG3YuLtu3iBedoGRt?usp=sharing' : `#${l.toLowerCase()}`;
-    return /*#__PURE__*/React.createElement("a", _extends({
-      key: l,
-      href: href
-    }, isProject ? {
-      target: '_blank',
-      rel: 'noopener noreferrer'
-    } : {}, {
-      className: "text-sm text-gray-400 font-medium hover:text-white transition-colors"
-    }), l);
-  }), /*#__PURE__*/React.createElement("a", {
-    href: "book-a-call.html",
-    className: "gradient-bg text-white text-sm font-bold px-5 py-2.5 rounded-full btn-glow transition-all"
-  }, "Book a call now")), /*#__PURE__*/React.createElement("button", {
-    className: "md:hidden text-white p-1",
-    onClick: () => setOpen(!open)
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "24",
-    height: "24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "2",
-    viewBox: "0 0 24 24"
-  }, open ? /*#__PURE__*/React.createElement("path", {
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    d: "M6 18L18 6M6 6l12 12"
-  }) : /*#__PURE__*/React.createElement("path", {
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    d: "M4 6h16M4 12h16M4 18h16"
-  })))), open && /*#__PURE__*/React.createElement("div", {
-    className: "md:hidden bg-[#0d0d1a] border-t border-white/10 px-6 py-5 flex flex-col gap-4"
-  }, links.map(l => {
-    const isProject = l === 'Projects';
-    const href = isProject ? 'https://drive.google.com/drive/folders/1h8Z6_MNBSo390TjfG3YuLtu3iBedoGRt?usp=sharing' : `#${l.toLowerCase()}`;
-    return /*#__PURE__*/React.createElement("a", _extends({
-      key: l,
-      href: href
-    }, isProject ? {
-      target: '_blank',
-      rel: 'noopener noreferrer'
-    } : {}, {
-      className: "text-gray-300 text-sm font-medium",
+  const links = ['About', 'Services', 'Experience', 'Projects', 'Testimonials'];
+  const linkEl = (l, extra) => h('a', _link(l, extra), l);
+  function _link(l, cls) {
+    return {
+      key: l, href: `#${l.toLowerCase()}`,
+      className: cls || 'text-sm text-gray-400 font-medium hover:text-white transition-colors',
       onClick: () => setOpen(false)
-    }), l);
-  }), /*#__PURE__*/React.createElement("a", {
-    href: "book-a-call.html",
-    className: "gradient-bg text-white text-sm font-bold px-5 py-3 rounded-full text-center",
-    onClick: () => setOpen(false)
-  }, "Book a call now")));
+    };
+  }
+  return h('nav', {
+    className: `fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-lg border-b border-white/10' : ''}`
+  },
+    h('div', { className: 'max-w-6xl mx-auto px-6 py-4 flex items-center justify-between' },
+      h('a', { href: '#', className: 'flex items-center gap-2.5' },
+        h('img', {
+          src: 'images/td-logo.png', alt: 'Thelbert Desoloc logo',
+          className: 'h-11 w-11 rounded-full object-cover ring-1 ring-blue-400/30 shadow-lg shadow-blue-900/30',
+          onError: e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline'; }
+        }),
+        h('span', { className: 'font-display text-xl font-bold text-white tracking-tight hidden' },
+          'TD', h('span', { className: 'gradient-text' }, '.'))
+      ),
+      h('div', { className: 'hidden md:flex items-center gap-8' },
+        links.map(l => linkEl(l)),
+        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-2.5 rounded-full btn-glow transition-all' }, "Let's Connect")
+      ),
+      h('button', { className: 'md:hidden text-white p-1', onClick: () => setOpen(!open) },
+        h('svg', { width: 24, height: 24, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+          open
+            ? h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', d: 'M6 18L18 6M6 6l12 12' })
+            : h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', d: 'M4 6h16M4 12h16M4 18h16' })
+        )
+      )
+    ),
+    open && h('div', { className: 'md:hidden bg-[#0B0B0F] border-t border-white/10 px-6 py-5 flex flex-col gap-4' },
+      links.map(l => linkEl(l, 'text-gray-300 text-sm font-medium')),
+      h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white text-sm font-bold px-5 py-3 rounded-full text-center', onClick: () => setOpen(false) }, "Let's Connect")
+    )
+  );
 }
 
 /* ── Hero ── */
 function Hero() {
-  return /*#__PURE__*/React.createElement("section", {
-    id: "about",
-    className: "min-h-screen flex items-center pt-24 pb-20 px-6 relative overflow-hidden"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full bg-purple-700/20 blur-3xl pointer-events-none"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "absolute bottom-1/4 -right-40 w-[500px] h-[500px] rounded-full bg-pink-600/15 blur-3xl pointer-events-none"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-14 items-center"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "fade-up-1 inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-gray-400 font-medium mb-8"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "w-2 h-2 bg-green-400 rounded-full animate-pulse inline-block"
-  }), "Available for new projects"), /*#__PURE__*/React.createElement("h1", {
-    className: "fade-up-2 font-display text-3xl md:text-[44px] font-bold text-white leading-[1.1] tracking-tight mb-6"
-  }, "Hello I am", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text whitespace-nowrap"
-  }, "Thelbert Desoloc")), /*#__PURE__*/React.createElement("p", {
-    className: "fade-up-3 text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-lg"
-  }, "A results-driven freelancer specializing in GoHighLevel, N8n automation, Claude AI, Facebook management, and graphic design. I help businesses streamline operations, automate workflows, manage CRM systems, and grow their online presence through smart marketing and creative content. With a focus on efficiency, branding, and lead generation, I deliver practical solutions that drive measurable results."), /*#__PURE__*/React.createElement("div", {
-    className: "fade-up-4 flex flex-wrap gap-4"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "book-a-call.html",
-    className: "gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2"
-  }, "Book a call now", /*#__PURE__*/React.createElement("svg", {
-    width: "16",
-    height: "16",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "2.5",
-    viewBox: "0 0 24 24"
-  }, /*#__PURE__*/React.createElement("line", {
-    x1: "5",
-    y1: "12",
-    x2: "19",
-    y2: "12"
-  }), /*#__PURE__*/React.createElement("polyline", {
-    points: "12 5 19 12 12 19"
-  }))), /*#__PURE__*/React.createElement("a", {
-    href: "#work",
-    className: "border border-white/20 text-white font-semibold px-8 py-4 rounded-full text-base hover:border-white/40 hover:bg-white/5 transition-all"
-  }, "View My Work")), /*#__PURE__*/React.createElement("div", {
-    className: "fade-up-4 flex gap-10 mt-12"
-  }, [['15+', 'Projects Delivered'], ['5★', 'Average Rating'], ['4yr', 'Experience']].map(([n, l]) => /*#__PURE__*/React.createElement("div", {
-    key: l
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "font-display text-2xl font-bold gradient-text"
-  }, n), /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-500 text-sm mt-0.5"
-  }, l))))), /*#__PURE__*/React.createElement("div", {
-    className: "flex justify-center items-center"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "float-anim relative"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "w-80 h-80 md:w-[480px] md:h-[480px] rounded-3xl gradient-bg p-[3px]"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "w-full h-full rounded-3xl bg-[#0d0d1a] overflow-hidden flex items-center justify-center"
-  }, /*#__PURE__*/React.createElement("img", {
-    src: "images/thelbert-about.png",
-    alt: "Thelbert D",
-    className: "w-full h-full object-cover",
-    onError: e => {
-      e.target.style.display = 'none';
-      e.target.nextSibling.style.display = 'flex';
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "w-full h-full hidden flex-col items-center justify-center gap-3 p-8"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-7xl"
-  }, "\uD83D\uDC68\u200D\uD83D\uDCBB"), /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-400 text-sm font-medium"
-  }, "Thelbert D."), /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-600 text-xs"
-  }, "Web Designer & Developer")))), /*#__PURE__*/React.createElement("div", {
-    className: "absolute -bottom-5 -left-8 bg-[#0d0d1a] border border-white/10 rounded-2xl px-4 py-3 shadow-2xl"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-[10px] text-gray-500 mb-0.5 uppercase tracking-wider"
-  }, "Latest project"), /*#__PURE__*/React.createElement("div", {
-    className: "text-white font-bold text-sm"
-  }, "N8n and Claude AI \u2705")), /*#__PURE__*/React.createElement("div", {
-    className: "absolute -top-5 -right-8 bg-[#0d0d1a] border border-white/10 rounded-2xl px-4 py-3 shadow-2xl text-center"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-2xl"
-  }, "\uD83D\uDE80"), /*#__PURE__*/React.createElement("div", {
-    className: "text-[10px] text-gray-500 mt-1"
-  }, "GoHighLevel"))))));
+  const role = useTypewriter([
+    'GoHighLevel Specialist',
+    'n8n Automation Expert',
+    'Claude AI Developer',
+    'Funnel & Website Designer'
+  ]);
+  return h('section', { id: 'home', className: 'min-h-screen flex items-center pt-28 pb-24 px-6 relative overflow-hidden' },
+    h('div', { className: 'absolute bottom-0 -left-32 w-[620px] h-[620px] rounded-full bg-blue-600/20 blur-[120px] pointer-events-none' }),
+    h('div', { className: 'absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/12 blur-[120px] pointer-events-none' }),
+    h('div', { className: 'max-w-5xl mx-auto w-full relative' },
+      h('p', { className: 'fade-up-1 inline-flex items-center gap-2.5 text-[11px] md:text-xs text-blue-300 font-semibold uppercase tracking-[0.28em] mb-7' },
+        h('span', { className: 'w-2 h-2 bg-blue-400 rounded-full inline-block' }),
+        'Thelbert Desoloc'),
+      h('h1', { className: 'fade-up-2 font-display font-bold text-white leading-[1.02] tracking-tight mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl' },
+        'Helping Businesses Scale Without ',
+        h('span', { className: 'gradient-text' }, 'Operational Bottlenecks.')),
+      h('p', { className: 'fade-up-3 font-display text-xl md:text-2xl font-bold text-white mb-3 h-8' },
+        role || ' ', h('span', { className: 'type-cursor h-5 md:h-6 align-middle' })),
+      h('p', { className: 'fade-up-3 text-gray-400 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl' },
+        'I build robust backend systems, automate repetitive processes, and optimize CRM workflows so your business can scale efficiently while staying organized and focused.'),
+      h('div', { className: 'fade-up-4 inline-flex items-center gap-2.5 bg-blue-400/[0.07] border border-blue-400/30 rounded-full px-5 py-2.5 text-xs md:text-sm text-blue-200 font-semibold mb-10 shadow-[0_0_30px_rgba(59,130,246,0.12)]' },
+        h('span', { className: 'w-2 h-2 bg-green-400 rounded-full animate-pulse inline-block' }),
+        'Available to start immediately. Can deploy your first working system quickly.'),
+      h('div', { className: 'fade-up-4 flex flex-wrap gap-4' },
+        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
+          h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }),
+            h('line', { x1: 16, y1: 2, x2: 16, y2: 6 }),
+            h('line', { x1: 8, y1: 2, x2: 8, y2: 6 }),
+            h('line', { x1: 3, y1: 10, x2: 21, y2: 10 })),
+          'Book a Call',
+          h('svg', { width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 2.5, viewBox: '0 0 24 24' },
+            h('line', { x1: 5, y1: 12, x2: 19, y2: 12 }),
+            h('polyline', { points: '12 5 19 12 12 19' }))),
+        h('a', { href: '#services', className: 'spin-border bg-white/[0.06] text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/10 transition-all inline-flex items-center gap-2.5' },
+          h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('ellipse', { cx: 12, cy: 5, rx: 9, ry: 3 }),
+            h('path', { d: 'M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5' }),
+            h('path', { d: 'M3 12c0 1.66 4 3 9 3s9-1.34 9-3' })),
+          'View Services')
+      )
+    )
+  );
 }
 
-/* ── Features ── */
-function Features() {
-  const cards = [{
-    icon: '🎨',
-    title: 'Stunning Visual Design',
-    desc: 'Every pixel crafted to reflect your brand and captivate your audience from the very first scroll.'
-  }, {
-    icon: '📘',
-    title: 'Facebook Management',
-    desc: 'Strategic Facebook page management, ad campaigns, and content creation that grow your audience and generate quality leads.'
-  }, {
-    icon: '🛠️',
-    title: 'Ongoing Support',
-    desc: "I don't disappear after launch. Available for updates, tweaks, and scaling as you grow."
-  }, {
-    icon: '⚙️',
-    title: 'GoHighLevel Setup',
-    desc: 'Full CRM and funnel builds inside GoHighLevel: pipelines, automations, and campaigns all connected.'
-  }, {
-    icon: '🔄',
-    title: 'n8n Automation',
-    desc: 'Custom workflow automations with n8n that save you hours every week by connecting your tools seamlessly.'
-  }, {
-    icon: '🤖',
-    title: 'Claude AI Integration',
-    desc: 'Embed AI-powered features into your business: smart chatbots, content generation, and intelligent workflows.'
-  }];
-  return /*#__PURE__*/React.createElement("section", {
-    id: "services",
-    className: "py-28 px-6"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-center mb-16",
-    "data-scroll": true
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3"
-  }, "What you get"), /*#__PURE__*/React.createElement("h2", {
-    className: "font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4"
-  }, "Everything you need to", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text"
-  }, "stand out online")), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400 text-lg max-w-lg mx-auto"
-  }, "Not just a website. A full digital presence that works while you sleep.")), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-  }, cards.map((c, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default",
-    "data-scroll": true,
-    "data-scroll-delay": String(i % 3 + 1)
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-3xl mb-5"
-  }, c.icon), /*#__PURE__*/React.createElement("h3", {
-    className: "text-white font-bold text-lg mb-2"
-  }, c.title), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400 text-sm leading-relaxed"
-  }, c.desc))))));
+/* ── Process ("Here Is What I Do") ── */
+function Process() {
+  const steps = [
+    'I analyze your current workflow and operations.',
+    'Identify bottlenecks and manual tasks slowing you down.',
+    'Build automated systems in GoHighLevel & n8n to replace manual work.',
+    'Integrate your disconnected tools into one unified ecosystem.',
+    'Ensure everything is scalable, branded, and simple for your team.'
+  ];
+  return h('section', { id: 'about', className: 'py-28 px-6' },
+    h('div', { className: 'max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-stretch' },
+      /* image */
+      h('div', { className: 'rounded-3xl gradient-bg p-[3px] shadow-2xl shadow-blue-900/40 min-h-[460px]', 'data-scroll': true },
+        h('div', { className: 'rounded-[1.4rem] overflow-hidden bg-[#0B0B0F] w-full h-full' },
+          h('img', {
+            src: 'images/thelbert-about.png', alt: 'Thelbert Desoloc',
+            className: 'w-full h-full object-cover',
+            onError: e => { e.target.parentElement.parentElement.style.display = 'none'; }
+          }))),
+      /* content */
+      h('div', { 'data-scroll': true, 'data-scroll-delay': '1' },
+        h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-3' }, 'How I work'),
+        h('h2', { className: 'font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-5' },
+          'Here is what ', h('span', { className: 'gradient-text' }, 'I do')),
+        h('p', { className: 'text-gray-400 text-base leading-relaxed mb-7' },
+          'As a GoHighLevel & Automation Specialist, I build and manage CRM architectures, automated workflows, and client operations so your business scales reliably — without the chaos.'),
+        h('h3', { className: 'text-white font-bold text-base mb-4' }, 'Here is how I work:'),
+        h('div', { className: 'flex flex-col gap-3.5 mb-8' },
+          steps.map((s, i) =>
+            h('div', { key: i, className: 'flex gap-3 items-center' },
+              h('span', { className: 'w-6 h-6 rounded-full border border-blue-400/50 text-blue-400 flex items-center justify-center flex-shrink-0' },
+                h('svg', { width: 13, height: 13, fill: 'none', stroke: 'currentColor', strokeWidth: 3, viewBox: '0 0 24 24' },
+                  h('polyline', { points: '20 6 9 17 4 12' }))),
+              h('p', { className: 'text-gray-300 text-base leading-snug' }, s)))),
+        h('div', { className: 'border-l-4 border-blue-500 pl-5 py-1 mb-9' },
+          h('p', { className: 'text-white font-bold text-lg leading-relaxed' },
+            'I build intelligent systems that streamline operations, eliminate manual work, and help your business scale with confidence.')),
+        h('div', { className: 'flex flex-col gap-3 max-w-xs' },
+          h('a', { href: PORTFOLIO_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border bg-white/[0.06] text-white font-semibold px-7 py-3.5 rounded-full text-sm hover:bg-white/10 transition-all inline-flex items-center justify-center gap-2.5' },
+            h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+              h('path', { d: 'M22 10 12 5 2 10l10 5 10-5Z' }),
+              h('path', { d: 'M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5' })),
+            'View Full Resume / CV'),
+          h('a', { href: PORTFOLIO_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border text-blue-300 font-semibold px-7 py-3.5 rounded-full text-sm hover:bg-blue-500/10 transition-all inline-flex items-center justify-center gap-2.5' },
+            h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+              h('polyline', { points: '16 18 22 12 16 6' }),
+              h('polyline', { points: '8 6 2 12 8 18' })),
+            'View Full Portfolio'))
+      )
+    )
+  );
+}
+
+/* ── Core Services ── */
+function Services() {
+  const cards = [
+    {
+      icon: '⚙️', title: 'GoHighLevel System Architecture',
+      problem: 'Messy pipelines, dropped leads, and manual follow-ups.',
+      outcome: 'A centralized, automated CRM that runs your operations seamlessly — pipelines, campaigns, and automations all connected.'
+    },
+    {
+      icon: '🎨', title: 'Funnel & Website Development',
+      problem: 'Low conversion rates, slow pages, and disconnected systems.',
+      outcome: 'High-converting funnels and websites that capture and route leads directly into automated workflows.'
+    },
+    {
+      icon: '🤖', title: 'AI & n8n Automation',
+      problem: 'Data silos and manual data entry across disconnected tools.',
+      outcome: 'Custom n8n and Claude AI workflows where data flows instantly and accurately — smart chatbots, content generation, and intelligent automation.'
+    },
+    {
+      icon: '📘', title: 'Facebook Management & Design',
+      problem: 'Inconsistent branding and content that fails to generate leads.',
+      outcome: 'Strategic Facebook management, ad campaigns, and graphic design that grow your audience and bring in quality leads.'
+    }
+  ];
+  const skills = [
+    'GoHighLevel CRM Setup & Management', 'Sales Funnels & Landing Pages',
+    'Workflow Automation & Triggers', 'Lead Routing & Pipeline Management',
+    'Client Onboarding Systems', 'Facebook Page & Ads Management',
+    'Integrations (n8n, Make, Zapier, Webhooks)', 'Claude AI Integration',
+    'Graphic Design & Branding', 'HTML / CSS / JavaScript (Basic)'
+  ];
+  const tools = ['GoHighLevel (GHL)', 'n8n', 'Claude AI', 'Make.com', 'Zapier', 'Meta Ads Manager', 'Supabase', 'Canva', 'Photoshop', 'CapCut Pro'];
+  return h('section', { id: 'services', className: 'py-28 px-6' },
+    h('div', { className: 'max-w-6xl mx-auto' },
+      SectionHeading({
+        eyebrow: 'What I offer', title: 'Core ', accent: 'Services',
+        sub: 'Not just a website. A full system that works while you sleep.'
+      }),
+      h('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-5' },
+        cards.map((c, i) =>
+          h('div', {
+            key: i, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default',
+            'data-scroll': true, 'data-scroll-delay': String((i % 2) + 1)
+          },
+            h('div', { className: 'text-3xl mb-5' }, c.icon),
+            h('h3', { className: 'text-white font-bold text-xl mb-4' }, c.title),
+            h('div', { className: 'mb-3' },
+              h('span', { className: 'text-blue-300/80 text-xs font-bold uppercase tracking-wider' }, 'The problem'),
+              h('p', { className: 'text-gray-400 text-base leading-relaxed mt-1' }, c.problem)),
+            h('div', null,
+              h('span', { className: 'text-blue-300/80 text-xs font-bold uppercase tracking-wider' }, 'The outcome'),
+              h('p', { className: 'text-gray-300 text-base leading-relaxed mt-1' }, c.outcome))
+          ))
+      ),
+      h('div', { className: 'grid md:grid-cols-2 gap-5 mt-5' },
+        h('div', { className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7', 'data-scroll': true },
+          h('h3', { className: 'text-white font-bold text-xl mb-5' }, 'Technical Skills'),
+          h('div', { className: 'flex flex-col gap-2.5' },
+            skills.map((s, i) =>
+              h('div', { key: i, className: 'flex gap-2.5 text-gray-400 text-base leading-relaxed' },
+                h('span', { className: 'w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-[7px]' }),
+                h('span', null, s))))
+        ),
+        h('div', { className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7', 'data-scroll': true, 'data-scroll-delay': '1' },
+          h('h3', { className: 'text-white font-bold text-xl mb-5' }, 'Tools & Stack'),
+          h('div', { className: 'flex flex-wrap gap-2.5' },
+            tools.map((t, i) =>
+              h('span', { key: i, className: 'bg-white/[0.05] border border-white/10 text-gray-300 text-base font-medium px-4 py-2 rounded-full' }, t)))
+        )
+      )
+    )
+  );
 }
 
 /* ── Experience ── */
 function Experience() {
-  const jobs = [{
-    icon: '⚙️',
-    logo: 'images/images (1).png',
-    company: 'Trioforce Digital Marketing',
-    role: 'GHL Specialist',
-    points: ['Creating funnels / Website', 'Automation / Integration']
-  }, {
-    icon: '🧠',
-    logo: 'images/brain-hub-logo.png',
-    company: 'Brain Hub',
-    role: 'Digital Marketing / GHL Specialist',
-    points: ['Creating Digital Product', 'Creating funnels / Website', 'Automation / Integration', 'AI image / AI Videos']
-  }, {
-    icon: '📊',
-    company: 'Garage Door Repair',
-    role: 'Bookkeeping and Executive Assistant',
-    points: ['Managed accounts payable and receivable.', 'Reconciled bank and credit card statements.', 'Prepared financial reports.', 'Assisted in budget preparation.', 'Conducted audits for compliance.']
-  }, {
-    icon: '🏡',
-    logo: 'images/paramount_home_group_logo (1).jpg',
-    company: 'Paramount Home Group',
-    role: 'Personal Assistant',
-    points: ['Managed MLS listings, ensuring accurate and timely updates.', 'Coordinated showings, inspections, and closings with clients, lenders, and vendors.', 'Maintained CRM database and tracked leads to support agent pipeline management.']
-  }, {
-    icon: '💪',
-    logo: 'images/fbc-logo.jpg',
-    company: 'Fitness Business Consulting',
-    role: 'GoHighLevel Tech-Support',
-    points: ['Automation Support', 'Meta Ads', 'Client Onboarding']
-  }, {
-    icon: '🤖',
-    company: 'Baccarat Automates',
-    role: 'GoHighLevel / AI Specialist',
-    points: ['Build Website', 'GHL Automation', 'Claude coding']
-  }];
-  return /*#__PURE__*/React.createElement("section", {
-    id: "experience",
-    className: "py-28 px-6"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-center mb-16",
-    "data-scroll": true
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3"
-  }, "Where I've worked"), /*#__PURE__*/React.createElement("h2", {
-    className: "font-display text-4xl md:text-5xl font-bold text-white leading-tight"
-  }, "Work ", /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text"
-  }, "Experience"))), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-  }, jobs.map((j, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default",
-    "data-scroll": true,
-    "data-scroll-delay": String(i % 3 + 1)
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mb-5 h-12 flex items-center"
-  }, j.logo ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("img", {
-    src: j.logo,
-    alt: j.company,
-    className: `w-12 h-12 object-cover rounded-full ${j.logoClass || ''}`,
-    onError: e => {
-      e.target.style.display = 'none';
-      e.target.nextSibling.style.display = 'inline';
-    }
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-3xl hidden"
-  }, j.icon)) : /*#__PURE__*/React.createElement("span", {
-    className: "text-3xl"
-  }, j.icon)), /*#__PURE__*/React.createElement("h3", {
-    className: "text-white font-bold text-lg mb-1"
-  }, j.company), /*#__PURE__*/React.createElement("p", {
-    className: "gradient-text font-semibold text-sm mb-4"
-  }, j.role), /*#__PURE__*/React.createElement("ul", {
-    className: "flex flex-col gap-2"
-  }, j.points.map((p, k) => /*#__PURE__*/React.createElement("li", {
-    key: k,
-    className: "flex gap-2.5 text-gray-400 text-sm leading-relaxed"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0 mt-[7px]"
-  }), /*#__PURE__*/React.createElement("span", null, p)))))))));
+  const jobs = [
+    { icon: '⚙️', logo: 'images/images (1).png', company: 'Trioforce Digital Marketing', role: 'GHL Specialist', points: ['Creating funnels / Website', 'Automation / Integration'] },
+    { icon: '🧠', logo: 'images/brain-hub-logo.png', company: 'Brain Hub', role: 'Digital Marketing / GHL Specialist', points: ['Creating Digital Product', 'Creating funnels / Website', 'Automation / Integration', 'AI image / AI Videos'] },
+    { icon: '📊', company: 'Garage Door Repair', role: 'Bookkeeping & Executive Assistant', points: ['Managed accounts payable and receivable.', 'Reconciled bank and credit card statements.', 'Prepared financial reports.', 'Assisted in budget preparation.', 'Conducted audits for compliance.'] },
+    { icon: '🏡', logo: 'images/paramount_home_group_logo (1).jpg', company: 'Paramount Home Group', role: 'Personal Assistant', points: ['Managed MLS listings, ensuring accurate and timely updates.', 'Coordinated showings, inspections, and closings.', 'Maintained CRM database and tracked leads to support the agent pipeline.'] },
+    { icon: '💪', logo: 'images/fbc-logo.jpg', company: 'Fitness Business Consulting', role: 'GoHighLevel Tech-Support', points: ['Automation Support', 'Meta Ads', 'Client Onboarding'] },
+    { icon: '🤖', company: 'Baccarat Automates', role: 'GoHighLevel / AI Specialist', points: ['Build Website', 'GHL Automation', 'Claude coding'] }
+  ];
+  return h('section', { id: 'experience', className: 'py-28 px-6 bg-white/[0.02]' },
+    h('div', { className: 'max-w-6xl mx-auto' },
+      SectionHeading({ eyebrow: "Where I've worked", title: 'Operational ', accent: 'History' }),
+      h('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5' },
+        jobs.map((j, i) =>
+          h('div', {
+            key: i, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default',
+            'data-scroll': true, 'data-scroll-delay': String((i % 3) + 1)
+          },
+            h('div', { className: 'mb-5 h-12 flex items-center' },
+              j.logo
+                ? h(React.Fragment, null,
+                    h('img', {
+                      src: j.logo, alt: j.company, className: 'w-12 h-12 object-cover rounded-full',
+                      onError: e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline'; }
+                    }),
+                    h('span', { className: 'text-3xl hidden' }, j.icon))
+                : h('span', { className: 'text-3xl' }, j.icon)),
+            h('h3', { className: 'text-white font-bold text-xl mb-1' }, j.company),
+            h('p', { className: 'gradient-text font-semibold text-base mb-4' }, j.role),
+            h('ul', { className: 'flex flex-col gap-2' },
+              j.points.map((p, k) =>
+                h('li', { key: k, className: 'flex gap-2.5 text-gray-400 text-base leading-relaxed' },
+                  h('span', { className: 'w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-[7px]' }),
+                  h('span', null, p))))
+          ))
+      )
+    )
+  );
+}
+
+/* ── Case Studies ── */
+function CaseStudies() {
+  const items = [
+    { tag: 'Dashboard', name: 'Client Status Dashboard', desc: 'Built a live sales dashboard (Google Sheet → n8n → Supabase → HTML) that tracks client status and generates clean status reports automatically.' },
+    { tag: 'Funnel', name: 'BBA Landing Page & Funnel', desc: 'Designed and built a high-converting landing page and registration funnel that filled a full cohort in under 48 hours.' },
+    { tag: 'AI Automation', name: 'n8n + Claude AI Workflows', desc: 'Connected disconnected tools with custom n8n workflows and Claude AI to automate content generation and intelligent follow-ups.' },
+    { tag: 'Pipeline', name: 'Automated Thumbnail Pipeline', desc: 'Engineered an automated graphic and thumbnail generation pipeline that produces on-brand creative at scale.' },
+    { tag: 'CRM', name: 'GoHighLevel CRM Builds', desc: 'Full CRM and funnel builds inside GoHighLevel — pipelines, automations, and campaigns all connected end to end.' },
+    { tag: 'Marketing', name: 'Facebook Ads & Management', desc: 'Managed Facebook pages, ad campaigns, and content creation that grew audiences and generated quality leads.' }
+  ];
+  return h('section', { id: 'projects', className: 'py-28 px-6' },
+    h('div', { className: 'max-w-6xl mx-auto' },
+      SectionHeading({
+        eyebrow: 'Selected work', title: 'Case ', accent: 'Studies',
+        sub: 'A selection of systems, funnels, and automations I have built for clients.'
+      }),
+      h('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5' },
+        items.map((c, i) =>
+          h('div', {
+            key: i, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow cursor-default flex flex-col',
+            'data-scroll': true, 'data-scroll-delay': String((i % 3) + 1)
+          },
+            h('span', { className: 'self-start text-blue-300 text-xs font-bold uppercase tracking-wider bg-blue-400/10 border border-blue-400/20 rounded-full px-3 py-1 mb-4' }, c.tag),
+            h('h3', { className: 'text-white font-bold text-xl mb-2' }, c.name),
+            h('p', { className: 'text-gray-400 text-base leading-relaxed' }, c.desc))
+        )
+      ),
+      h('div', { className: 'text-center mt-12', 'data-scroll': true },
+        h('a', { href: PORTFOLIO_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border inline-flex items-center gap-2 text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/5 transition-all' },
+          'View Full Portfolio',
+          h('svg', { width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 2.5, viewBox: '0 0 24 24' },
+            h('line', { x1: 5, y1: 12, x2: 19, y2: 12 }),
+            h('polyline', { points: '12 5 19 12 12 19' })))
+      )
+    )
+  );
 }
 
 /* ── Testimonials ── */
 function Testimonials() {
-  const items = [{
-    quote: "Thelbert completely transformed our online presence. The registration page he built converted so well, we filled our entire cohort in under 48 hours.",
-    name: "Sarah Mitchell",
-    title: "",
-    initials: "SM",
-    grad: "from-purple-500 to-pink-500"
-  }, {
-    quote: "Working with Thelbert was seamless. He understood our brand immediately and delivered a site that looks premium, loads fast, and actually gets us leads.",
-    name: "James Carter",
-    title: "",
-    initials: "JC",
-    grad: "from-blue-500 to-purple-500"
-  }, {
-    quote: "I've worked with a lot of designers, and Thelbert is in a different league. The attention to detail, the speed, and the final product. All exceptional.",
-    name: "Melissa Torres",
-    title: "",
-    initials: "MT",
-    grad: "from-pink-500 to-orange-500"
-  }, {
-    quote: "Our funnels and landing pages started converting almost immediately. You can tell everything was built with strategy.",
-    name: "Kevin Santos",
-    title: "",
-    initials: "KS",
-    grad: "from-orange-500 to-pink-500"
-  }, {
-    quote: "We were already using GoHighLevel but everything was messy. After the optimization, our pipeline became clear and we stopped losing leads. Huge difference.",
-    name: "Daniel Reyes",
-    title: "",
-    initials: "DR",
-    grad: "from-purple-500 to-blue-500"
-  }, {
-    quote: "The designs made our brand look 10x more professional. Our ads finally started getting attention and engagement.",
-    name: "Adrian Lopez",
-    title: "",
-    initials: "AL",
-    grad: "from-blue-500 to-pink-500"
-  }];
-  return /*#__PURE__*/React.createElement("section", {
-    id: "work",
-    className: "py-28 px-6 bg-white/[0.02]"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-center mb-16",
-    "data-scroll": true
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-pink-400 text-xs font-bold uppercase tracking-[0.2em] mb-3"
-  }, "What clients say"), /*#__PURE__*/React.createElement("h2", {
-    className: "font-display text-4xl md:text-5xl font-bold text-white leading-tight"
-  }, "Real results,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text"
-  }, "real people"))), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-1 md:grid-cols-3 gap-6"
-  }, items.map((t, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5 card-glow",
-    "data-scroll": true,
-    "data-scroll-delay": String(i % 3 + 1)
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-0.5"
-  }, [...Array(5)].map((_, j) => /*#__PURE__*/React.createElement("span", {
-    key: j,
-    className: "text-yellow-400 text-sm"
-  }, "\u2605"))), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-300 text-sm leading-relaxed flex-1"
-  }, "\"", t.quote, "\""), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-3"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: `w-10 h-10 rounded-full bg-gradient-to-br ${t.grad} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`
-  }, t.initials), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "text-white font-semibold text-sm"
-  }, t.name), /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-500 text-xs"
-  }, t.title))))))));
+  const items = [
+    { quote: "Thelbert completely transformed our online presence. The registration page he built converted so well, we filled our entire cohort in under 48 hours.", name: 'Sarah Mitchell', title: 'Program Director', initials: 'SM', grad: 'from-blue-300 to-blue-600' },
+    { quote: "Working with Thelbert was seamless. He understood our brand immediately and delivered a site that looks premium, loads fast, and actually gets us leads.", name: 'James Carter', title: 'Founder', initials: 'JC', grad: 'from-blue-500 to-blue-700' },
+    { quote: "I've worked with a lot of designers, and Thelbert is in a different league. The attention to detail, the speed, and the final product — all exceptional.", name: 'Melissa Torres', title: 'Marketing Lead', initials: 'MT', grad: 'from-blue-400 to-blue-600' },
+    { quote: "Our funnels and landing pages started converting almost immediately. You can tell everything was built with strategy.", name: 'Kevin Santos', title: 'Agency Owner', initials: 'KS', grad: 'from-blue-600 to-blue-400' },
+    { quote: "We were already using GoHighLevel but everything was messy. After the optimization, our pipeline became clear and we stopped losing leads. Huge difference.", name: 'Daniel Reyes', title: 'Operations Manager', initials: 'DR', grad: 'from-blue-300 to-blue-700' },
+    { quote: "The designs made our brand look 10x more professional. Our ads finally started getting attention and engagement.", name: 'Adrian Lopez', title: 'Business Owner', initials: 'AL', grad: 'from-blue-500 to-blue-600' }
+  ];
+  return h('section', { id: 'testimonials', className: 'py-28 px-6 bg-white/[0.02]' },
+    h('div', { className: 'max-w-6xl mx-auto' },
+      SectionHeading({ eyebrow: 'What clients say', title: 'Client ', accent: 'Feedback', sub: 'What business leaders say about my work and systems.' }),
+      h('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6' },
+        items.map((t, i) =>
+          h('div', {
+            key: i, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5 card-glow',
+            'data-scroll': true, 'data-scroll-delay': String((i % 3) + 1)
+          },
+            h('div', { className: 'flex gap-0.5' }, [...Array(5)].map((_, j) => h('span', { key: j, className: 'text-blue-400 text-sm' }, '★'))),
+            h('p', { className: 'text-gray-300 text-base leading-relaxed flex-1' }, '"', t.quote, '"'),
+            h('div', { className: 'flex items-center gap-3' },
+              h('div', { className: `w-10 h-10 rounded-full bg-gradient-to-br ${t.grad} flex items-center justify-center text-white text-xs font-bold flex-shrink-0` }, t.initials),
+              h('div', null,
+                h('div', { className: 'text-white font-semibold text-base' }, t.name),
+                h('div', { className: 'text-gray-500 text-sm' }, t.title))))
+        )
+      )
+    )
+  );
 }
 
-/* ── Contact Form ── */
-function Contact() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+/* ── Education ── */
+function Education() {
+  const edu = [
+    { icon: '🎓', title: 'Information Technology', org: 'College' },
+    { icon: '🔬', title: 'STEM Strand', org: 'Senior High School' }
+  ];
+  const training = ['GoHighLevel Masterclass', 'n8n Automation Training', 'Claude AI / Prompt Engineering', 'Responsive Web Design', 'Facebook Ads & Marketing', 'Graphic Design Fundamentals'];
+  return h('section', { className: 'py-28 px-6' },
+    h('div', { className: 'max-w-6xl mx-auto' },
+      SectionHeading({ eyebrow: 'Background', title: 'Education & ', accent: 'Training' }),
+      h('div', { className: 'grid md:grid-cols-2 gap-5' },
+        h('div', { className: 'flex flex-col gap-5' },
+          edu.map((e, i) =>
+            h('div', {
+              key: i, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 card-glow flex items-center gap-5',
+              'data-scroll': true, 'data-scroll-delay': String((i % 2) + 1)
+            },
+              h('div', { className: 'text-4xl' }, e.icon),
+              h('div', null,
+                h('h3', { className: 'text-white font-bold text-xl' }, e.title),
+                h('p', { className: 'gradient-text font-semibold text-base' }, e.org))))
+        ),
+        h('div', { className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7', 'data-scroll': true, 'data-scroll-delay': '1' },
+          h('h3', { className: 'text-white font-bold text-xl mb-5' }, 'Training & Programs'),
+          h('div', { className: 'flex flex-col gap-2.5' },
+            training.map((t, i) =>
+              h('div', { key: i, className: 'flex gap-2.5 text-gray-400 text-base leading-relaxed' },
+                h('span', { className: 'w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-[7px]' }),
+                h('span', null, t))))
+        )
+      )
+    )
+  );
+}
+
+/* ── Final CTA + Contact ── */
+function CTA() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
-  const handle = e => setForm({
-    ...form,
-    [e.target.name]: e.target.value
-  });
+  const handle = e => setForm({ ...form, [e.target.name]: e.target.value });
   const submit = e => {
     e.preventDefault();
     const subject = encodeURIComponent(`New project inquiry from ${form.name}`);
@@ -517,114 +682,171 @@ function Contact() {
     window.location.href = `mailto:desolocthelbert3@gmail.com?subject=${subject}&body=${body}`;
     setSent(true);
   };
-  return /*#__PURE__*/React.createElement("section", {
-    id: "contact",
-    className: "py-28 px-6"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-2xl mx-auto"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-center mb-12",
-    "data-scroll": true
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3"
-  }, "Let's talk"), /*#__PURE__*/React.createElement("h2", {
-    className: "font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4"
-  }, "Ready to build", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "gradient-text"
-  }, "something great?")), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400"
-  }, "Fill in your details and I'll get back to you within 24 hours.")), sent ? /*#__PURE__*/React.createElement("div", {
-    className: "bg-white/[0.04] border border-green-500/30 rounded-2xl p-16 text-center",
-    "data-scroll": true
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-5xl mb-5"
-  }, "\uD83D\uDCE7"), /*#__PURE__*/React.createElement("h3", {
-    className: "text-white font-bold text-xl mb-2"
-  }, "Almost there!"), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400"
-  }, "Your email app just opened \u2014 press ", /*#__PURE__*/React.createElement("span", {
-    className: "text-white font-semibold"
-  }, "Send"), " there to deliver your message. I'll reply within 24 hours.")) : /*#__PURE__*/React.createElement("form", {
-    onSubmit: submit,
-    className: "bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-5",
-    "data-scroll": true
-  }, [{
-    name: 'name',
-    label: 'Your Name',
-    type: 'text',
-    placeholder: 'Jane Smith'
-  }, {
-    name: 'email',
-    label: 'Email Address',
-    type: 'email',
-    placeholder: 'jane@example.com'
-  }].map(f => /*#__PURE__*/React.createElement("div", {
-    key: f.name
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "text-gray-400 text-sm font-medium block mb-2"
-  }, f.label), /*#__PURE__*/React.createElement("input", {
-    name: f.name,
-    type: f.type,
-    value: form[f.name],
-    onChange: handle,
-    required: true,
-    placeholder: f.placeholder,
-    className: "w-full rounded-xl px-4 py-3 text-sm text-white",
-    style: {
-      background: 'rgba(255,255,255,0.05)',
-      border: '1px solid rgba(255,255,255,0.1)'
-    }
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "text-gray-400 text-sm font-medium block mb-2"
-  }, "Your Message"), /*#__PURE__*/React.createElement("textarea", {
-    name: "message",
-    value: form.message,
-    onChange: handle,
-    required: true,
-    rows: 5,
-    placeholder: "Tell me about your project...",
-    className: "w-full rounded-xl px-4 py-3 text-sm text-white resize-none",
-    style: {
-      background: 'rgba(255,255,255,0.05)',
-      border: '1px solid rgba(255,255,255,0.1)'
-    }
-  })), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    className: "gradient-bg text-white font-bold py-4 rounded-xl text-base btn-glow transition-all mt-1"
-  }, "Send Message \u2192"))));
+  return h('section', { id: 'contact', className: 'py-28 px-6' },
+    h('div', { className: 'max-w-2xl mx-auto' },
+      h('div', { className: 'text-center mb-12', 'data-scroll': true },
+        h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-3' }, "Let's talk"),
+        h('h2', { className: 'font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4' },
+          'Ready to ', h('span', { className: 'gradient-text' }, 'Optimize?')),
+        h('p', { className: 'text-gray-400 max-w-lg mx-auto' },
+          "If your operations feel messy, manual, or hard to scale — I'll fix the system behind it. Fill in your details and I'll get back to you within 24 hours.")),
+      sent
+        ? h('div', { className: 'bg-white/[0.04] border border-green-500/30 rounded-2xl p-16 text-center', 'data-scroll': true },
+            h('div', { className: 'text-5xl mb-5' }, '📧'),
+            h('h3', { className: 'text-white font-bold text-xl mb-2' }, 'Almost there!'),
+            h('p', { className: 'text-gray-400' }, 'Your email app just opened — press ', h('span', { className: 'text-white font-semibold' }, 'Send'), " there to deliver your message. I'll reply within 24 hours."))
+        : h('form', { onSubmit: submit, className: 'bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-5', 'data-scroll': true },
+            [
+              { name: 'name', label: 'Your Name', type: 'text', placeholder: 'Jane Smith' },
+              { name: 'email', label: 'Email Address', type: 'email', placeholder: 'jane@example.com' }
+            ].map(f =>
+              h('div', { key: f.name },
+                h('label', { className: 'text-gray-400 text-sm font-medium block mb-2' }, f.label),
+                h('input', {
+                  name: f.name, type: f.type, value: form[f.name], onChange: handle, required: true,
+                  placeholder: f.placeholder, className: 'w-full rounded-xl px-4 py-3 text-sm text-white',
+                  style: { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }
+                }))),
+            h('div', null,
+              h('label', { className: 'text-gray-400 text-sm font-medium block mb-2' }, 'Your Message'),
+              h('textarea', {
+                name: 'message', value: form.message, onChange: handle, required: true, rows: 5,
+                placeholder: 'Tell me about your project...', className: 'w-full rounded-xl px-4 py-3 text-sm text-white resize-none',
+                style: { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }
+              })),
+            h('div', { className: 'flex flex-wrap gap-3 mt-1' },
+              h('button', { type: 'submit', className: 'flex-1 gradient-bg text-white font-bold py-4 rounded-xl text-base btn-glow transition-all' }, 'Send Message →'),
+              h('a', { href: 'book-a-call.html', className: 'flex-1 text-center border border-white/20 text-white font-semibold py-4 rounded-xl text-base hover:border-white/40 hover:bg-white/5 transition-all' }, 'Book a Call'))
+          )
+    )
+  );
+}
+
+/* ── Final CTA Banner ── */
+function CTABanner() {
+  return h('section', { id: 'contact', className: 'py-28 px-6' },
+    h('div', { className: 'max-w-3xl mx-auto text-center', 'data-scroll': true },
+      h('p', { className: 'text-blue-300 text-xs font-bold uppercase tracking-[0.2em] mb-4' }, "Let's talk"),
+      h('h2', { className: 'font-display text-4xl md:text-6xl font-bold text-white leading-tight mb-6' },
+        'Ready to ', h('span', { className: 'gradient-text' }, 'Optimize?')),
+      h('p', { className: 'text-gray-400 text-lg leading-relaxed mb-3 max-w-xl mx-auto' },
+        "If your operations feel messy, manual, or hard to scale — I'll fix the system behind it."),
+      h('p', { className: 'text-white font-semibold text-base md:text-lg mb-10' },
+        "Let's build a system that works without you constantly managing it."),
+      h('div', { className: 'flex flex-wrap gap-4 justify-center' },
+        h('a', { href: 'book-a-call.html', className: 'spin-border gradient-bg text-white font-bold px-8 py-4 rounded-full text-base btn-glow transition-all inline-flex items-center gap-2.5' },
+          h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }),
+            h('line', { x1: 16, y1: 2, x2: 16, y2: 6 }),
+            h('line', { x1: 8, y1: 2, x2: 8, y2: 6 }),
+            h('line', { x1: 3, y1: 10, x2: 21, y2: 10 })),
+          'Book a Call'),
+        h('a', { href: 'mailto:desolocthelbert3@gmail.com', className: 'spin-border bg-white/[0.06] text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/10 transition-all inline-flex items-center gap-2.5' },
+          h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('rect', { x: 2, y: 4, width: 20, height: 16, rx: 2 }),
+            h('path', { d: 'm22 7-10 5L2 7' })),
+          'Send Message'),
+        h('a', { href: PORTFOLIO_URL, target: '_blank', rel: 'noopener noreferrer', className: 'spin-border text-blue-300 font-semibold px-8 py-4 rounded-full text-base hover:bg-blue-500/10 transition-all inline-flex items-center gap-2.5' },
+          h('svg', { width: 18, height: 18, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('polyline', { points: '16 18 22 12 16 6' }),
+            h('polyline', { points: '8 6 2 12 8 18' })),
+          'View Portfolio')
+      )
+    )
+  );
 }
 
 /* ── Footer ── */
 function Footer() {
-  return /*#__PURE__*/React.createElement("footer", {
-    className: "border-t border-white/[0.07] py-12 px-6"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-start"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
-    className: "text-white font-bold text-sm mb-3"
-  }, "Phone"), /*#__PURE__*/React.createElement("a", {
-    href: "tel:+639485875842",
-    className: "text-gray-400 text-sm font-semibold hover:text-white transition-colors"
-  }, "+63 948 587 5842")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
-    className: "text-white font-bold text-sm mb-3"
-  }, "Email"), /*#__PURE__*/React.createElement("a", {
-    href: "mailto:desolocthelbert3@gmail.com",
-    className: "text-gray-400 text-sm font-semibold hover:text-white transition-colors break-all"
-  }, "desolocthelbert3@gmail.com")), /*#__PURE__*/React.createElement("div", {
-    className: "md:text-right"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400 text-sm font-semibold leading-relaxed"
-  }, "Copyright \xA9 2022 Thelbert Desoloc."), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-400 text-sm font-semibold leading-relaxed"
-  }, ": )Powered by Thelbert"))));
+  return h('footer', { className: 'border-t border-white/[0.07] py-10 px-6' },
+    h('div', { className: 'max-w-6xl mx-auto text-center' },
+      h('p', { className: 'text-gray-400 text-sm font-semibold leading-relaxed' }, '© 2026 Thelbert Desoloc.'),
+      h('p', { className: 'text-gray-500 text-sm font-semibold leading-relaxed' }, 'All systems operational.'))
+  );
+}
+
+/* ── Chat Widget ── */
+function RobotIcon({ size = 26 }) {
+  return h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' },
+    h('rect', { x: 4, y: 8, width: 16, height: 12, rx: 3 }),
+    h('path', { d: 'M12 8V4' }),
+    h('circle', { cx: 12, cy: 3, r: 1 }),
+    h('line', { x1: 2, y1: 13, x2: 4, y2: 13 }),
+    h('line', { x1: 20, y1: 13, x2: 22, y2: 13 }),
+    h('circle', { cx: 9, cy: 13, r: 1.3, fill: 'currentColor', stroke: 'none' }),
+    h('circle', { cx: 15, cy: 13, r: 1.3, fill: 'currentColor', stroke: 'none' }),
+    h('path', { d: 'M9 16.5h6' })
+  );
+}
+
+function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  return h('div', { className: 'fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-4' },
+    open && h('div', { className: 'chat-pop w-[330px] max-w-[calc(100vw-3rem)] bg-[#0B0B0F] border border-white/10 rounded-3xl shadow-2xl shadow-black/60 overflow-hidden' },
+      /* header */
+      h('div', { className: 'gradient-bg px-5 py-4 flex items-center gap-3' },
+        h('div', { className: 'w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white' }, h(RobotIcon, { size: 24 })),
+        h('div', { className: 'flex-1' },
+          h('div', { className: 'text-white font-bold text-sm leading-tight' }, "Thelbert's Assistant"),
+          h('div', { className: 'flex items-center gap-1.5 text-white/70 text-[11px] font-semibold' },
+            h('span', { className: 'w-1.5 h-1.5 bg-green-700 rounded-full inline-block' }), 'Online — replies fast')),
+        h('button', { onClick: () => setOpen(false), 'aria-label': 'Close chat', className: 'text-white/70 hover:text-white transition-colors' },
+          h('svg', { width: 20, height: 20, fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, viewBox: '0 0 24 24' },
+            h('path', { strokeLinecap: 'round', d: 'M6 18L18 6M6 6l12 12' })))
+      ),
+      /* body */
+      h('div', { className: 'p-5 flex flex-col gap-4' },
+        h('div', { className: 'msg-in flex gap-2.5 items-end' },
+          h('div', { className: 'w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0' }, h(RobotIcon, { size: 18 })),
+          h('div', { className: 'bg-white/[0.06] border border-white/10 rounded-2xl rounded-bl-sm px-4 py-3 text-gray-200 text-sm leading-relaxed' },
+            'Hi! 👋 Want to automate and scale your business? The fastest way to start is a quick call — let me grab you a slot.')),
+        h('a', {
+          href: 'book-a-call.html',
+          className: 'spin-border gradient-bg text-white font-bold py-3.5 rounded-full text-sm btn-glow transition-all inline-flex items-center justify-center gap-2'
+        },
+          h('svg', { width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 2, viewBox: '0 0 24 24' },
+            h('rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }),
+            h('line', { x1: 16, y1: 2, x2: 16, y2: 6 }),
+            h('line', { x1: 8, y1: 2, x2: 8, y2: 6 }),
+            h('line', { x1: 3, y1: 10, x2: 21, y2: 10 })),
+          'Book a Call'),
+        h('a', {
+          href: 'mailto:desolocthelbert3@gmail.com', onClick: () => setOpen(false),
+          className: 'spin-border text-white font-semibold py-3 rounded-full text-sm text-center hover:bg-white/5 transition-all'
+        }, 'Or send a message')
+      )
+    ),
+    h('button', {
+      onClick: () => setOpen(o => !o),
+      'aria-label': open ? 'Close chat' : 'Open chat',
+      className: `spin-border chat-pulse w-16 h-16 rounded-full gradient-bg text-white flex items-center justify-center shadow-2xl shadow-blue-900/40 hover:scale-105 transition-transform ${open ? 'rotate-0' : ''}`
+    },
+      open
+        ? h('svg', { width: 26, height: 26, fill: 'none', stroke: 'currentColor', strokeWidth: 2.4, viewBox: '0 0 24 24' }, h('path', { strokeLinecap: 'round', d: 'M6 18L18 6M6 6l12 12' }))
+        : h(RobotIcon, { size: 28 })
+    )
+  );
 }
 
 /* ── App ── */
 function App() {
   useScrollReveal();
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Nav, null), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, null), /*#__PURE__*/React.createElement(Experience, null), /*#__PURE__*/React.createElement(Features, null), /*#__PURE__*/React.createElement(Testimonials, null), /*#__PURE__*/React.createElement(Contact, null)), /*#__PURE__*/React.createElement(Footer, null));
+  return h(React.Fragment, null,
+    h(Nav, null),
+    h('main', { className: 'relative' },
+      h(Hero, null),
+      h(Process, null),
+      h(Services, null),
+      h(Experience, null),
+      h(CaseStudies, null),
+      h(Testimonials, null),
+      h(CTABanner, null)
+    ),
+    h(Footer, null),
+    h(ChatWidget, null)
+  );
 }
-ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(App, null));
+ReactDOM.createRoot(document.getElementById('root')).render(h(App, null));
 </script>
 </body>
 </html>

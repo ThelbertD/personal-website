@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book a Call | Thelbert D</title>
   <meta name="description" content="Book a free 30-minute discovery call with Thelbert D for web design, GoHighLevel, automation, and AI.">
+  <meta name="theme-color" content="#0A0A0B">
+  <link rel="icon" type="image/png" href="images/td-logo.png">
+  <link rel="apple-touch-icon" href="images/td-logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <script>
@@ -21,25 +24,25 @@
   </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    body { background: #070711; font-family: 'Inter', sans-serif; }
+    body { background: #0A0A0B; font-family: 'Inter', sans-serif; }
 
     .gradient-text {
-      background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f97316 100%);
+      background: linear-gradient(135deg, #F4DD9E 0%, #D4AF37 50%, #A87B2E 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
     .gradient-bg {
-      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      background: linear-gradient(135deg, #E6C36A 0%, #B8893B 100%);
     }
     .btn-glow { transition: all 0.3s ease; }
     .btn-glow:hover {
-      box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
       transform: scale(1.04);
     }
     .card-glow { transition: all 0.3s ease; }
     .card-glow:hover {
-      box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.22);
       transform: translateY(-4px);
     }
     @keyframes fadeUp {
@@ -55,10 +58,13 @@
 <body class="text-white">
 
   <!-- ── Nav ── -->
-  <nav class="fixed inset-x-0 top-0 z-50 bg-[#070711]/90 backdrop-blur-lg border-b border-white/10">
+  <nav class="fixed inset-x-0 top-0 z-50 bg-[#0a0a0b]/90 backdrop-blur-lg border-b border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="font-display text-xl font-bold text-white tracking-tight">
-        TD<span class="gradient-text">.</span>
+      <a href="index.html" class="flex items-center gap-2.5">
+        <img src="images/td-logo.png" alt="Thelbert Desoloc logo"
+          class="h-11 w-11 rounded-full object-cover ring-1 ring-amber-400/30 shadow-lg shadow-amber-900/30"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='inline';" />
+        <span class="font-display text-xl font-bold text-white tracking-tight hidden">TD<span class="gradient-text">.</span></span>
       </a>
       <a href="index.html"
         class="text-sm text-gray-400 font-medium hover:text-white transition-colors inline-flex items-center gap-2">
@@ -73,8 +79,8 @@
   <!-- ── Hero / Booking ── -->
   <section class="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden">
     <!-- Glow blobs -->
-    <div class="absolute top-1/4 -left-40 w-[500px] h-[500px] rounded-full bg-purple-700/20 blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-1/4 -right-40 w-[500px] h-[500px] rounded-full bg-pink-600/15 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/4 -left-40 w-[500px] h-[500px] rounded-full bg-amber-600/20 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 -right-40 w-[500px] h-[500px] rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
 
     <div class="max-w-3xl mx-auto w-full text-center relative">
       <div class="fade-up-1 inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-gray-400 font-medium mb-8">
@@ -94,9 +100,9 @@
     <!-- ── Calendar embed ── -->
     <div class="fade-up-4 max-w-3xl mx-auto w-full relative">
       <!-- soft glow behind the card -->
-      <div class="absolute -inset-5 bg-purple-600/15 blur-3xl rounded-[2.5rem] pointer-events-none"></div>
+      <div class="absolute -inset-5 bg-amber-600/10 blur-3xl rounded-[2.5rem] pointer-events-none"></div>
 
-      <div class="relative rounded-3xl gradient-bg p-[3px] shadow-2xl shadow-purple-900/40">
+      <div class="relative rounded-3xl gradient-bg p-[3px] shadow-2xl shadow-amber-900/40">
         <div class="rounded-[1.35rem] bg-white overflow-hidden">
           <!-- Card header strip -->
           <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
@@ -125,7 +131,7 @@
   <section class="pb-28 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-12">
-        <p class="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">How it works</p>
+        <p class="text-amber-300 text-xs font-bold uppercase tracking-[0.2em] mb-3">How it works</p>
         <h2 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight">
           What to expect <span class="gradient-text">on the call</span>
         </h2>
@@ -155,9 +161,9 @@
       </div>
 
       <div class="flex flex-wrap justify-center gap-x-10 gap-y-3 mt-12 text-sm text-gray-500">
-        <span class="inline-flex items-center gap-2"><span class="text-purple-400">●</span> 30 minutes</span>
-        <span class="inline-flex items-center gap-2"><span class="text-pink-400">●</span> Google Meet or phone</span>
-        <span class="inline-flex items-center gap-2"><span class="text-orange-400">●</span> Completely free</span>
+        <span class="inline-flex items-center gap-2"><span class="text-amber-300">●</span> 30 minutes</span>
+        <span class="inline-flex items-center gap-2"><span class="text-amber-300">●</span> Google Meet or phone</span>
+        <span class="inline-flex items-center gap-2"><span class="text-amber-300">●</span> Completely free</span>
       </div>
     </div>
   </section>
